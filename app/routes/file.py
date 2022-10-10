@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from fastapi import APIRouter, Depends
 import xlrd
 import pandas as pd
@@ -25,16 +25,22 @@ async def readfile():
     #我們也可以將每一行作為一個單獨的字典傳遞給函式 records。最後的結果是一個列表，
     #每一行都是一個字典。例如：
     sumDataDict = dict()
+    fixDateDict = dict()
+
     useDataDict = data.to_dict('records')
     for i in useDataDict:
         if sumDataDict.__contains__(i['耗材名稱']):
+            diff = datetime.date(i['下料時間']) - datetime.date(i['上料時間'])
             number = sumDataDict[i["耗材名稱"]]
+            fixDateDict[i["耗材名稱"]].append(diff.days)
             sumDataDict[i["耗材名稱"]] = number +1
         else:
-            print(i["耗材名稱"])
-            sumDataDict.setdefault(i["耗材名稱"],0)
+            # print(i["耗材名稱"])
+            diff = datetime.date(i['下料時間']) - datetime.date(i['上料時間'])
+            fixDateDict.setdefault(i["耗材名稱"],[diff.days])
+            sumDataDict.setdefault(i["耗材名稱"],1)
     test = pd.DataFrame(list(sumDataDict.items()),columns=['耗材名稱','使用數量'])
+    print(fixDateDict)
     print(test)
-    print(sumDataDict)
         
     return useDataDict
