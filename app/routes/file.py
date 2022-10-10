@@ -2,6 +2,7 @@ from datetime import date, datetime
 from fastapi import APIRouter, Depends
 import xlrd
 import pandas as pd
+from app.services.file import (outputImage)
 router = APIRouter(prefix="/file")
 @router.get("/")
 async def readfile():
