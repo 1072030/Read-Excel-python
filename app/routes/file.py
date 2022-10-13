@@ -43,5 +43,5 @@ async def readfile():
     test = pd.DataFrame(list(sumDataDict.items()),columns=['耗材名稱','使用數量'])
     print(fixDateDict)
     print(test)
-        
-    return useDataDict
+    modify = outputImage(useDataDict)
+    return modify
