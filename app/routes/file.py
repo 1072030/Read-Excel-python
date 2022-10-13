@@ -41,7 +41,7 @@ async def readfile():
             fixDateDict.setdefault(i["耗材名稱"],[diff.days])
             sumDataDict.setdefault(i["耗材名稱"],1)
     test = pd.DataFrame(list(sumDataDict.items()),columns=['耗材名稱','使用數量'])
-    print(fixDateDict)
-    print(test)
-    modify = outputImage(useDataDict)
+    # print(fixDateDict)
+    # print(test)
+    modify = outputImage(fixDateDict)
     return modify
